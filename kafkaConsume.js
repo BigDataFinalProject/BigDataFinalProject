@@ -36,7 +36,7 @@ consumer.on("ready", function(arg) {
 });
 
 consumer.on("data", function(m) {
-  //console.log("data");
+//can we use here send to mongodb code as a variable ?-shahar
  console.log(m.value.toString());
 });
 consumer.on("disconnected", function(arg) {
