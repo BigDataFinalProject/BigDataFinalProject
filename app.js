@@ -19,6 +19,9 @@ app.use(express.static("public"));
 app.get('/', (req, res) => res.send("<a href='/send'>Send</a> <br/><a href=''>View</a>"));
 app.get('/send', (req, res) => res.render('sender'));
 
+//11/7- prediction table
+app.get('/p', (req, res) => res.render('prediction'));
+
 
 //------------ Socket.io ----------------
 io.on("connection", (socket) => {

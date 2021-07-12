@@ -2,6 +2,10 @@
 
 const uuid = require("uuid");
 const Kafka = require("node-rdkafka");
+const { MongoBulkWriteError, MongoClient } = require("mongodb");
+//11/7
+var server = require('http').createServer(Kafka.KafkaConsume);
+const io = require("socket.io")(server)
 
 const kafkaConf = {
   "group.id": "cloudkarafka-example",
@@ -38,7 +42,16 @@ consumer.on("ready", function(arg) {
 consumer.on("data", function(m) {
 //can we use here send to mongodb code as a variable ?-shahar
  console.log(m.value.toString());
+ //11/7
+ 
+ const DbHelper = require ('./Mongo'); // import all file and name it DbHelper
+ check(m.value.toString());
+ 
+
+ 
 });
+
+
 consumer.on("disconnected", function(arg) {
   process.exit();
 });

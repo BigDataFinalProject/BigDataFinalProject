@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+    
+   
+<h2>Prediction Table</h2>
+
+
+<button onclick="myFunction()">Learn again</button>
+
+<table  style="width:100%">
+  
+    </head>
+    <style>
+
+        table, th, td {
+             border: 1px solid black;
+        }
+
+        th, td {
+            padding: 15px;
+        }
+      
+        table { background-color: #f5f246; }
+       
+    </style>
+   <body>
+  <tr>
+    <th></th>
+    <th>1</th>
+    <th>2</th> 
+    <th>3</th>
+    <th>4</th>
+    <th>5</th>
+    <th>6</th>
+   
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+</table>
+
+
+
+<p id="demo"></p>
+<h2>accurency</h2>
+<script>
+  
+
+  function myFunction() {
+    document.getElementById("demo").innerHTML = "Hello World";
+    socket.emit("tocsv");  //12/7
+  }
+  </script>
+
+
+
+
+</body>
+</html>
