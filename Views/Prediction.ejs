@@ -7,7 +7,7 @@
 <h2>Prediction Table</h2>
 
 
-<button onclick="myFunction()">Learn again</button>
+<!-- <button onclick="process()">Learn again</button> -->
 
 <table  style="width:100%">
   
@@ -25,7 +25,7 @@
         table { background-color: #f5f246; }
        
     </style>
-   <body>
+   <body onload="initSocket()">
   <tr>
     <th></th>
     <th>1</th>
@@ -96,16 +96,24 @@
 
 <p id="demo"></p>
 <h2>accurency</h2>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+ 
 <script>
-  
+  // 14/7 - same code as in Sender.ejs = with emit "Outcsv"->app.js and from there we activate mongo_csv
+  function initSocket() {
+            //socket is global
+            socket = io.connect();
+            alert("connected");
+        }
+   function sendMessage() {
+           alert("csv file...");
+            socket.emit("Outcsv");
+   }
+</script> 
 
-  function myFunction() {
-    document.getElementById("demo").innerHTML = "Hello World";
-    socket.emit("tocsv");  //12/7
-  }
-  </script>
-
-
+<input type="button" value="BigMl->Learn again" onclick="sendMessage()" />
 
 
 </body>

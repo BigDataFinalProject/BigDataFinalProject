@@ -3,10 +3,8 @@ const MongoClient = require('mongodb').MongoClient;
 //const url = "mongodb://localhost:27017/";
 const uri = "mongodb+srv://ariel:ariel123@cluster0.dcgiy.mongodb.net/ariel2?retryWrites=true&w=majority";
 const Json2csvParser = require('json2csv').Parser;
-const io = require("socket.io")(server)
 
-
-
+module.exports.publish= function (){
 // Create a connection to the MongoDB database
          MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
                if (err) throw err;
@@ -34,3 +32,4 @@ const io = require("socket.io")(server)
             db.close();
           });
 });
+}

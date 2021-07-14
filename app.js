@@ -23,12 +23,20 @@ app.get('/send', (req, res) => res.render('sender'));
 app.get('/p', (req, res) => res.render('prediction'));
 
 
+//------------ Mongo_csv------------
+const mongocsv = require('./Mongo_csv');
+
 //------------ Socket.io ----------------
 io.on("connection", (socket) => {
     console.log("new user connected");
     socket.on("totalWaitingCalls", (msg) => { console.log(msg.totalWaiting) });
     socket.on("callDetails", (msg) => { console.log(msg);kafka.publish(msg) });
+    socket.on("Outcsv", () => { 
+        console.log("to csv need to activate mongocsv");
+        mongocsv.publish()});
 });
+
+
 
 
 
