@@ -19,26 +19,9 @@ app.get('/test', function (req, res) {
     redisClient.hgetall('Sections', function (err, object) {
         console.log(object);
     });
-    /*
-    also ok:
-    redisClient.hmset('Sections', {
-                        'javascript': 'AngularJS',
-                        'css': 'Bootstrap',
-                        'node': 'Express'
-                        });
-    */
-
-// lists : rpush or lpush
-/* client.rpush(['frameworks', 'angularjs', 'backbone'], function(err, reply) {
-    console.log(reply); //prints 2
-});
-
-// -1= get all
-client.lrange('frameworks', 0, -1, function(err, reply) {
-    console.log(reply); // ['angularjs', 'backbone']
-}); */
-
-    redisClient.publish("message", "{\"message\":\"Hello from Redis\"}", function () {
+   
+   var see="{\"name\":\"car1\",\"color\":\"red\"}";
+    redisClient.publish("message", see, function () {
     });
 
     res.send('תקשרתי עם רדיס....')
@@ -51,6 +34,16 @@ app.use(function (req, res, next) {
     next(err);
 });
 
+
+sendredis= function(m){   //13/7- message from kafka (this function we activated from kafkaconsume code)
+    // we still need to take only part of message to redis.
+    var see="{\"name\":\"car1\",\"color\":\"red\"}";
+    redisClient.publish("message", m, function () {
+    });
+
+    console.log("in sendredis");
+
+}
 
 redisClient.on('connect', function () {
     console.log('Sender connected to Redis');
