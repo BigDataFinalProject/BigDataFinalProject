@@ -8,7 +8,7 @@ const connection = new bigml.BigML(username,password);
 connection.project='project/60ef024de4279b249b002bcc';
 connection.organization="http://www.ilo.org/global/lang--en/index.htm";
 const source = new bigml.Source(connection);
-const see='./data/Try.csv';
+const see='./data/iris.csv';
   source.create(see, function(error, sourceInfo) {
   if (!error && sourceInfo) {
     var dataset = new bigml.Dataset(connection);
@@ -20,9 +20,11 @@ const see='./data/Try.csv';
              var prediction = new bigml.Prediction(connection);
              
              setTimeout(() => { }, 8000);  //18/7 maybe a different way
-             prediction.create(modelInfo, {'insert': 1})
+             prediction.create(modelInfo, {'petal length': 1})
+          
           }
         });
+       
       }
     });
   }

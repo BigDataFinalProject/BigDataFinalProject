@@ -22,7 +22,7 @@ module.exports.publish= function (){
 	           const csv = json2csvParser.parse(result);
 
 	           console.log(csv);
-	          fs.writeFile('cars.csv', csv, function(err) {
+	          fs.writeFile('./data/cars.csv', csv, function(err) {
 		          if (err) throw err;
 		          console.log('file saved');
 	         });
