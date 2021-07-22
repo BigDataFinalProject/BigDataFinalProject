@@ -4,6 +4,7 @@ var server = require('http').createServer(app);
 const io = require("socket.io")(server)
 const port = 3000
 
+
 //------------ kafka------------
 const kafka = require('./kafkaProduce');
 const bodyParser = require('body-parser');
@@ -21,6 +22,8 @@ app.get('/send', (req, res) => res.render('sender'));
 
 app.get('/dashboard', (req, res) => res.render('dashboard'));
 
+
+
 //11/7- prediction table
 app.get('/p', (req, res) => res.render('prediction'));
 
@@ -36,6 +39,7 @@ io.on("connection", (socket) => {
     socket.on("Outcsv", () => { 
         console.log("to csv need to activate mongocsv");
         mongocsv.publish()});
+
 });
 
 
