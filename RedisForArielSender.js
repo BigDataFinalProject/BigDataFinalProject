@@ -37,10 +37,19 @@ app.use(function (req, res, next) {
 
 sendredis= function(m){   //13/7- message from kafka (this function we activated from kafkaconsume code)
     // we still need to take only part of message to redis.
-    var see="{\"name\":\"car1\",\"color\":\"red\"}";
-    const obj =JSON.parse(m);  //make it a car, and then take stuff out
-    console.log(obj.name+"after json");
-    redisClient.publish("message", m, function () {
+    //make it a car, and then take stuff out
+    console.log(m+"m");
+    const myObj=JSON.parse(m)
+    current_section = myObj["current_section"];
+    Entrance_to_road = myObj["Entrance_to_road"];
+    Exit_from_road = myObj["Exit_from_road"];
+    const Redis = {
+        "current_section": current_section,
+        "Entrance_to_road": Entrance_to_road,
+        "Exit_from_road": Exit_from_road
+       };
+     console.log(JSON.stringify(Redis)+"JSON.stringify(user)")
+    redisClient.publish("message", JSON.stringify(Redis), function () {
     });
 
     console.log("in sendredis");

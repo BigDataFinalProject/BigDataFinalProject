@@ -1,14 +1,15 @@
 class Car {
-    constructor(number_id,type,Entrance_section,Exit_from_section,Entrance_to_road,Exit_from_road,day,hour,special_day) {
+    constructor(number_id,type,current_section,Entrance_to_road,Exit_from_road,day,hour,special_day) {
       this.number_id = number_id;
       this.type = type;
-      this.Entrance_section = Entrance_section;
-      this.Exit_from_section=Exit_from_section;
+      //this.Entrance_section = Entrance_section;
+      //this.Exit_from_section=Exit_from_section;
       this.Entrance_to_road=Entrance_to_road;
       this.Exit_from_road=Exit_from_road;
       this.day=day;
       this.hour=hour;
       this.special_day=special_day;
+      this.current_section=current_section;
     }
   }
 

@@ -49,8 +49,8 @@ consumer.on("data", function(m) {
 
  var redis = require('./RedisForArielSender')
  sendredis(m.value.toString());
- 
 
+ 
  
 });
 
