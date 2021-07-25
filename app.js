@@ -30,6 +30,8 @@ app.get('/p', (req, res) => res.render('prediction'));
 
 //------------ Mongo_csv------------
 const mongocsv = require('./Mongo_csv');
+const bigml = require('./BigMl');
+
 
 //------------ Socket.io ----------------
 io.on("connection", (socket) => {
@@ -38,7 +40,8 @@ io.on("connection", (socket) => {
     socket.on("callDetails", (msg) => { console.log(msg);kafka.publish(msg) });
     socket.on("Outcsv", () => { 
         console.log("to csv need to activate mongocsv");
-        mongocsv.publish()});
+        mongocsv.publish()
+        bigml.publish()});
 
 });
 
