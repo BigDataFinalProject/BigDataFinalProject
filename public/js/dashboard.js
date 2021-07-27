@@ -1,17 +1,14 @@
-(function($) {
-    'use strict'; 
-    $(function() {
 
-    //Revenue Chart
-    if ($("#revenue-chart").length) {
+
         var revenueChartCanvas = $("#revenue-chart").get(0).getContext("2d");
-
+        var temp='900'
+        
         var revenueChart = new Chart(revenueChartCanvas, {
             type: 'bar',
             data: {
             labels: ["1", "2", "3", "4", "5", "6"],
             datasets: [{
-                data: [105, 195, 290, 320, 500, 100],
+                data: [105, 195, 290, 320, 500, temp],
                 backgroundColor: ["rgba(255, 86, 48, 0.3)", "rgba(255, 86, 48, 0.3)", "rgba(255, 86, 48, 0.3)", "rgb(255, 86, 48,0.3)", "rgba(255, 86, 48, 0.3)", "rgba(255, 86, 48, 0.3)"],
                 }
             ]
@@ -48,12 +45,11 @@
                 display: false
             }
             }
+            
         });
-    }
     
 
-    });
-})(jQuery);
+    
 
 
 

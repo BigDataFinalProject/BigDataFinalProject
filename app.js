@@ -20,7 +20,24 @@ app.use(express.static("public"));
 app.get('/', (req, res) => res.send("<a href='/send'>Send</a> <br/><a href=''>View</a>"));
 app.get('/send', (req, res) => res.render('sender'));
 
-app.get('/dashboard', (req, res) => res.render('dashboard'));
+
+// read from section.json 
+const fs = require('fs');
+var save;
+// read JSON object from file
+fs.readFile('./data/section.json', 'utf-8', (err, data) => {
+    if (err) {
+        throw err;
+    }
+    save=data,toString();
+    save=JSON.parse(data.toString());
+    save=save.current;
+    console.log(save)
+
+});
+
+    // parse JSON object
+app.get('/dashboard', (req, res) => res.render('dashboard',{section: save.toString()} ));
 
 
 
