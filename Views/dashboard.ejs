@@ -3,10 +3,13 @@
 <head>
 
   <script type="text/javascript" >
-
   window.onload = function () {
-    var temp="<%= section%>" ;
-    alert(temp)
+    var var1="<%= one%>" ;
+    var var2="<%= two%>" ;
+    var var3="<%= three%>" ;
+    var var4="<%= four%>" ;
+    var var5="<%= five%>" ;
+    var var6="<%= six%>" ;
     var chart = new CanvasJS.Chart("chartContainer", {
       title:{
         text: "Cars on the way"              
@@ -15,12 +18,12 @@
         { //dataSeries object
          type: "column",
          dataPoints: [
-         { label: "1", y: parseInt(temp.toString())},
-         { label: "2", y: 29 },
-         { label: "3", y: 120 },                                    
-         { label: "4", y: 34 },
-         { label: "5", y: 24 },
-         { label: "6", y: 24 }
+         { label: "1", y: parseInt(var1.toString())},
+         { label: "2", y: parseInt(var2.toString())},
+         { label: "3", y: parseInt(var3.toString())},                                    
+         { label: "4", y: parseInt(var4.toString())},
+         { label: "5", y: parseInt(var5.toString())},
+         { label: "6", y: parseInt(var6.toString())}
          ]
        }
        ]

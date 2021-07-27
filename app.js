@@ -21,24 +21,48 @@ app.get('/', (req, res) => res.send("<a href='/send'>Send</a> <br/><a href=''>Vi
 app.get('/send', (req, res) => res.render('sender'));
 
 
-// read from section.json 
-const fs = require('fs');
-var save;
-// read JSON object from file
-fs.readFile('./data/section.json', 'utf-8', (err, data) => {
-    if (err) {
-        throw err;
-    }
-    save=data,toString();
-    save=JSON.parse(data.toString());
-    save=save.current;
-    console.log(save)
+// //  read from Cars_section and send info to dashboard -27/7
+// update=function(){
+// var var1,var2,var3,var4,var5,var6;
+// const fs2 = require('fs');
+// fs2.readFile('./data/Cars_Sections.json', 'utf-8', (err, data) => {
+//         if (err) {
+//             throw err;
+//         }
+//         console.log("data2"+data)
+//         save2=JSON.parse(data.toString()); 
+//         console.log("save2"+save2.one.toString())
+//         var1=parseInt(save2.one);
+//         var2=parseInt(save2.two);
+//         var3=parseInt(save2.three);
+//         var4=parseInt(save2.four);
+//         var5=parseInt(save2.five);
+//         var6=parseInt(save2.six);
+// });
+// }
+    
+app.get('/dashboard', function routeHandler(req ,res) {
+var var1,var2,var3,var4,var5,var6;
+const fs2 = require('fs');
+fs2.readFile('./data/Cars_Sections.json', 'utf-8', (err, data) => {
+        if (err) {
+            throw err;
+        }
+        console.log("data2"+data)
+        save2=JSON.parse(data.toString()); 
+        console.log("save2"+save2.one.toString())
+        var1=parseInt(save2.one);
+        var2=parseInt(save2.two);
+        var3=parseInt(save2.three);
+        var4=parseInt(save2.four);
+        var5=parseInt(save2.five);
+        var6=parseInt(save2.six);
+        console.log(var1+","+var2)
+        res.render('dashboard',{one:var1,two:var2,three:var3,four:var4,five:var5,six:var6} );
 
 });
-
-    // parse JSON object
-app.get('/dashboard', (req, res) => res.render('dashboard',{section: save.toString()} ));
-
+    
+});
 
 
 //11/7- prediction table
@@ -48,6 +72,7 @@ app.get('/p', (req, res) => res.render('prediction'));
 //------------ Mongo_csv------------
 const mongocsv = require('./Mongo_csv');
 const bigml = require('./BigMl');
+const { data } = require('bigml/lib/logger');
 
 
 //------------ Socket.io ----------------

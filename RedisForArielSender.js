@@ -52,6 +52,8 @@ sendredis= function(m){   //13/7- message from kafka (this function we activated
     redisClient.publish("message", JSON.stringify(Redis), function () {
     });
 
+    
+
     console.log("in sendredis");
 
 }
