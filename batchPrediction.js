@@ -2,6 +2,8 @@ const bigml = require('bigml');
 
 const fs = require('fs');
 
+see= function(){
+  var pred;
 // read JSON object from file
 fs.readFile('./data/user.json', 'utf-8', (err, data) => {
     if (err) {
@@ -16,31 +18,30 @@ const connection = new bigml.BigML(username,password);
 connection.project='project/60ef024de4279b249b002bcc';
 connection.organization="http://www.ilo.org/global/lang--en/index.htm";
 
-   var prediction = new bigml.Prediction(connection);
-   setTimeout(() => { }, 8000);  //18/7 maybe a different way
-   prediction.create(user.modelInfo_resource, {"petal length":1})
-   
 
-var batchPrediction = new bigml.BatchPrediction(connection),
-tmpFileName='./data/prediction.txt';
-       //batch prediction creation call
-batchPrediction.create(user.modelInfo_resource,user.datasetInfo_resource,{'name': 'see'},
-function(error, batchPredictionInfo) {
-if (!error && batchPredictionInfo) {
-            // retrieving batch prediction finished resource
-    batchPrediction.get(batchPredictionInfo, true,
-    function (error, batchPredictionInfo) {
-         if (batchPredictionInfo.object.status.code === bigml.constants.FINISHED) {
-                  // retrieving the batch prediction output file and storing it
-                  // in the local file system
-                  batchPrediction.download(batchPredictionInfo,tmpFileName,
-                    function (error, cbFilename) {
-                      console.log(cbFilename);
-                    });
-          }
-    });
+
+
+    console.log("see"+data)
+    var localModel = new bigml.LocalModel(user.modelInfo_resource,connection);
+    localModel.predict({'petal length': 1},
+                       function(error, prediction) {
+                         const Prediction = {
+                          "prediciton":prediction.prediction
+                         };
+                        
+                         const data = JSON.stringify( Prediction);
+                      
+                      // write JSON string to a file
+                      fs.writeFile('./data/Prediction.json', data, (err) => {
+                          if (err) {
+                              throw err;
+                          }
+                          console.log("JSON data is saved.");
+                      });
+                         //return pred;
+                         });
+                         
+});
 }
-});
 
-});
 

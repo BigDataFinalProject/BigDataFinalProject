@@ -37,6 +37,7 @@ function beginSim () {
     Car=new Car(90,types[0],days.Sunday,"6:00",0,1,1,1,1,6,6);
     const kafka = require('./kafkaProduce');
     t=JSON.parse("{\"name\":\"car1\", \"insert\":\"1\",\"out\":\"6\",\"color\":\"red\"}");
+    console.log(t)
     setTimeout(() => { kafka.publish(t) }, 2000);
    
    
