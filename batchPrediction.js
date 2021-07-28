@@ -16,6 +16,11 @@ const connection = new bigml.BigML(username,password);
 connection.project='project/60ef024de4279b249b002bcc';
 connection.organization="http://www.ilo.org/global/lang--en/index.htm";
 
+   var prediction = new bigml.Prediction(connection);
+   setTimeout(() => { }, 8000);  //18/7 maybe a different way
+   prediction.create(user.modelInfo_resource, {"petal length":1})
+   
+
 var batchPrediction = new bigml.BatchPrediction(connection),
 tmpFileName='./data/prediction.txt';
        //batch prediction creation call

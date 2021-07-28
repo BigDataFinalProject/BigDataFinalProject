@@ -11,7 +11,7 @@ const connection = new bigml.BigML(username,password);
 connection.project='project/60ef024de4279b249b002bcc';
 connection.organization="http://www.ilo.org/global/lang--en/index.htm";
 const source = new bigml.Source(connection);
-const see='./data/Try.csv';
+const see='./data/iris.csv';
 const fs = require('fs');
 
 module.exports.publish=function(){
@@ -40,9 +40,9 @@ module.exports.publish=function(){
             }
             console.log("JSON data is saved.");
         });
-           var prediction = new bigml.Prediction(connection);
-           setTimeout(() => { }, 8000);  //18/7 maybe a different way
-           prediction.create(modelInfo, {'input': 1,"name":"car1"})
+        //    var prediction = new bigml.Prediction(connection);
+        //    setTimeout(() => { }, 8000);  //18/7 maybe a different way
+        //    prediction.create(modelInfo, {"petal length":1})
           }
         });
       }

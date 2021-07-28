@@ -29,9 +29,11 @@ module.exports.publish= function(msg)
 { 
   console.log("publish");  
   m=JSON.stringify(msg);
+  console.log("m="+m)
   producer.produce(topic, -1, genMessage(m), uuid.v4());  
   //producer.disconnect();   
 }
+
 
 
 
