@@ -43,17 +43,20 @@ sendredis= function(m){   //13/7- message from kafka (this function we activated
     current_section = myObj["current_section"];
     Entrance_to_road = myObj["Entrance_to_road"];
     Exit_from_road = myObj["Exit_from_road"];
+    number_id = myObj["number_id"];
+    direction = myObj["direction"];
+
     const Redis = {
         "current_section": current_section,
         "Entrance_to_road": Entrance_to_road,
-        "Exit_from_road": Exit_from_road
+        "Exit_from_road": Exit_from_road,
+        "direction": direction
        };
-     console.log(JSON.stringify(Redis)+"JSON.stringify(user)")
+     
+    redisClient.set(number_id.toString(), JSON.stringify(Redis));
+
     redisClient.publish("message", JSON.stringify(Redis), function () {
     });
-
-    
-
     console.log("in sendredis");
 
 }

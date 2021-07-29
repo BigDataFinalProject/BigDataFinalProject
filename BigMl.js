@@ -11,7 +11,7 @@ const connection = new bigml.BigML(username,password);
 connection.project='project/60ef024de4279b249b002bcc';
 connection.organization="http://www.ilo.org/global/lang--en/index.htm";
 const source = new bigml.Source(connection);
-const see='./data/iris.csv';
+const see='./data/cars.csv';
 const fs = require('fs');
 
 module.exports.publish=function(){

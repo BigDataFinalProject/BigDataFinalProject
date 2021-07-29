@@ -21,7 +21,6 @@ module.exports.publish= function (){
 	           const json2csvParser = new Json2csvParser({ csvFields });
 	           const csv = json2csvParser.parse(result);
 
-	           console.log(csv);
 	          fs.writeFile('./data/cars.csv', csv, function(err) {
 		          if (err) throw err;
 		          console.log('file saved');

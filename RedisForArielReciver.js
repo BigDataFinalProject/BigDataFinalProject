@@ -45,19 +45,6 @@ redisClient.on("message", function (channel, data) {
         "section":current_section
     };
   
-    // const fs = require('fs');
-    // const to_json= JSON.stringify(Current_section);
-      
-    //     // write JSON string to a file
-    //     fs.writeFile('./data/section.json', to_json, (err) => {
-    //         if (err) {
-    //             throw err;
-    //         }
-    //         console.log("JSON data is saved.");
-    //     });
-    //  console.log("after json")  
-     
-     //////////////////////////////////// 27/7
     const fs2 = require('fs');
     var save2;
 
