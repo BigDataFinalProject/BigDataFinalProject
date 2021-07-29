@@ -44,8 +44,8 @@ consumer.on("data", function(m) {
  console.log(m.value.toString());
  //11/7
  
- const DbHelper = require ('./Mongo'); // import all file and name it DbHelper
- check(m.value.toString());  //we send the message to mongo db
+  const DbHelper = require ('./Mongo'); // import all file and name it DbHelper
+  check(m.value.toString());  //we send the message to mongo db
 
  var redis = require('./RedisForArielSender')
  sendredis(m.value.toString());
