@@ -21,6 +21,7 @@ app.get('/', (req, res) => res.send("<a href='/send'>Send</a> <br/><a href=''>Vi
 app.get('/send', (req, res) => res.render('sender'));
 
 
+
 // //  read from Cars_section and send info to dashboard -27/7
 // update=function(){
 // var var1,var2,var3,var4,var5,var6;
@@ -58,9 +59,23 @@ fs2.readFile('./data/Cars_Sections.json', 'utf-8', (err, data) => {
         var5=parseInt(save2.five);
         var6=parseInt(save2.six);
         console.log(var1+","+var2)
-        res.render('dashboard',{one:var1,two:var2,three:var3,four:var4,five:var5,six:var6} );
+        //res.render('dashboard',{one:var1,two:var2,three:var3,four:var4,five:var5,six:var6} );
+        const fs3 = require('fs');
+        fs3.readFile('./data/car_details.json', 'utf-8', (err, data2) => {
+             if (err) {
+                throw err;
+        }
+        // save_json=JSON.parse(data2.toString()); 
+        // console.log("data2.toString()=="+data2.toString())
+        // console.log("save+json"+save_json.toString())
+     
+        res.render('dashboard',{one:var1,two:var2,three:var3,four:var4,five:var5,six:var6,json:data2.toString()} );
+
+        });
 
 });
+
+
     
 });
 

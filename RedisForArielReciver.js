@@ -35,6 +35,7 @@ app.use(function(err, req, res, next) {
 var var1,var2,var3,var4,var5,var6;
 
 redisClient.on("message", function (channel, data) {
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     var data = JSON.parse(data);
     console.log(data);
     current_section = data["current_section"];
@@ -52,17 +53,8 @@ redisClient.on("message", function (channel, data) {
         if (err) {
             throw err;
         }
-        console.log("data2"+data)
         save2=JSON.parse(data.toString()); 
-        console.log("save2"+save2.one.toString())
-        var1=parseInt(save2.one);
-        var2=parseInt(save2.two);
-        var3=parseInt(save2.three);
-        var4=parseInt(save2.four);
-        var5=parseInt(save2.five);
-        var6=parseInt(save2.six);
-        console.log("vars="+var1+","+var2+","+var3+","+var4+","+var5+","+var6)
-        console.log(current_section+"current_section")
+        var1=parseInt(save2.one);var2=parseInt(save2.two);var3=parseInt(save2.three);var4=parseInt(save2.four);var5=parseInt(save2.five);var6=parseInt(save2.six);
         switch (parseInt(current_section)) {
             case 1:var1++;break;
             case 2:var2++;break;
@@ -73,22 +65,14 @@ redisClient.on("message", function (channel, data) {
             default: break;
               
           }
-        console.log("vars="+var1+","+var2+","+var3+","+var4+","+var5+","+var6)
         const fs3 = require('fs');
-        const cars = {
-            "one": var1,
-            "two": var2,
-            "three": var3,
-            "four": var4,
-            "five": var5,
-            "six": var6
-        };
+        const cars = {"one": var1,"two": var2,"three": var3,"four": var4,"five": var5,"six": var6 };
         const data3 = JSON.stringify(cars);
         fs3.writeFile('./data/Cars_Sections.json', data3, (err) => {
             if (err) {
                 throw err;
             }
-            console.log("JSON data is saved.");
+            console.log("JSON data is saved from reciver.");
             // try to activate ejs without pressing !!!!!!!!!!
         });
 
