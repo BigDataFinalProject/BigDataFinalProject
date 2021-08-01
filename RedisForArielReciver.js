@@ -35,12 +35,8 @@ app.use(function(err, req, res, next) {
 var var1,var2,var3,var4,var5,var6;
 
 redisClient.on("message", function (channel, data) {
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     var data = JSON.parse(data);
-    console.log(data);
     current_section = data["current_section"];
-    console.log(current_section)
-
     //26/7
     const Current_section={
         "section":current_section

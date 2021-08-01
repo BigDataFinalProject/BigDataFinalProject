@@ -21,26 +21,6 @@ app.get('/', (req, res) => res.send("<a href='/send'>Send</a> <br/><a href=''>Vi
 app.get('/send', (req, res) => res.render('sender'));
 
 
-
-// //  read from Cars_section and send info to dashboard -27/7
-// update=function(){
-// var var1,var2,var3,var4,var5,var6;
-// const fs2 = require('fs');
-// fs2.readFile('./data/Cars_Sections.json', 'utf-8', (err, data) => {
-//         if (err) {
-//             throw err;
-//         }
-//         console.log("data2"+data)
-//         save2=JSON.parse(data.toString()); 
-//         console.log("save2"+save2.one.toString())
-//         var1=parseInt(save2.one);
-//         var2=parseInt(save2.two);
-//         var3=parseInt(save2.three);
-//         var4=parseInt(save2.four);
-//         var5=parseInt(save2.five);
-//         var6=parseInt(save2.six);
-// });
-// }
     
 app.get('/dashboard', function routeHandler(req ,res) {
 var var1,var2,var3,var4,var5,var6;
@@ -49,26 +29,14 @@ fs2.readFile('./data/Cars_Sections.json', 'utf-8', (err, data) => {
         if (err) {
             throw err;
         }
-        console.log("data2"+data)
         save2=JSON.parse(data.toString()); 
-        console.log("save2"+save2.one.toString())
-        var1=parseInt(save2.one);
-        var2=parseInt(save2.two);
-        var3=parseInt(save2.three);
-        var4=parseInt(save2.four);
-        var5=parseInt(save2.five);
-        var6=parseInt(save2.six);
-        console.log(var1+","+var2)
-        //res.render('dashboard',{one:var1,two:var2,three:var3,four:var4,five:var5,six:var6} );
+        var1=parseInt(save2.one);var2=parseInt(save2.two);var3=parseInt(save2.three);
+        var4=parseInt(save2.four);var5=parseInt(save2.five);var6=parseInt(save2.six);
         const fs3 = require('fs');
         fs3.readFile('./data/car_details.json', 'utf-8', (err, data2) => {
              if (err) {
                 throw err;
         }
-        // save_json=JSON.parse(data2.toString()); 
-        // console.log("data2.toString()=="+data2.toString())
-        // console.log("save+json"+save_json.toString())
-     
         res.render('dashboard',{one:var1,two:var2,three:var3,four:var4,five:var5,six:var6,json:data2.toString()} );
 
         });
@@ -80,7 +48,7 @@ fs2.readFile('./data/Cars_Sections.json', 'utf-8', (err, data) => {
 });
 
 
-//11/7- prediction table
+// prediction table
 app.get('/p', (req, res) => res.render('prediction'));
 
 
@@ -95,9 +63,8 @@ const { data } = require('bigml/lib/logger');
 io.on("connection", (socket) => {
     console.log("new user connected");
     socket.on("totalWaitingCalls", (msg) => { console.log(msg.totalWaiting) });
-    socket.on("callDetails", (msg) => { console.log(msg);kafka.publish(msg) });
+    socket.on("callDetails", (msg) => { kafka.publish(msg) });
     socket.on("Outcsv", () => { 
-        console.log("to csv need to activate mongocsv");
         mongocsv.publish()
         bigml.publish()});
 

@@ -6,7 +6,6 @@ const BigML = require('bigml/lib/BigML');
 const Resource = require('bigml/lib/Resource');
 const username='shaharglikman00';
 const password='31ad2a093477b42b7417905e933564631112dbd8';
-//const project='project/60ef024de4279b249b002bcc';
 const connection = new bigml.BigML(username,password);
 connection.project='project/60ef024de4279b249b002bcc';
 connection.organization="http://www.ilo.org/global/lang--en/index.htm";
@@ -40,9 +39,7 @@ module.exports.publish=function(){
             }
             console.log("JSON data is saved.");
         });
-        //    var prediction = new bigml.Prediction(connection);
-        //    setTimeout(() => { }, 8000);  //18/7 maybe a different way
-        //    prediction.create(modelInfo, {"petal length":1})
+       
           }
         });
       }

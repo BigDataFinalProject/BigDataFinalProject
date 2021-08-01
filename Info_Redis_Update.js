@@ -6,6 +6,25 @@ var redisClient = redis.createClient();
 var sub = redis.createClient()
 var save_section;
 
+var AsyncLock = require('async-lock');
+var lock = new AsyncLock();
+
+
+function operation(id,last_section,next_section) {
+  console.log(id + " calling operation");
+  lock.acquire(id, function(done) {
+      console.log(id + " Running operation")
+      setTimeout(function() {
+          update_file_sections(last_section,next_section)
+          console.log(id + " Finishing operation")
+          done();
+      }, 3000)
+  }, function(err, ret) {
+      console.log(id + " Freeing lock", ret)
+  }, {});
+}
+
+
 update_file_sections=function(last_section,next_section){
     console.log("in")
     const fs2 = require('fs');
@@ -54,7 +73,7 @@ update_file_sections=function(last_section,next_section){
 
 }
 
-update= function(){
+function update(){
   var async = require("async");
   redisClient.keys('*', function (err, keys) {
     console.log("update")
@@ -82,7 +101,8 @@ update= function(){
                if(car.current_section>6 || car.current_section<1){
                 redisClient.del(results[i].Id_car)
                }
-               update_file_sections(save_section,car.current_section);
+               operation('key1',save_section,car.current_section)
+               //update_file_sections(save_section,car.current_section)           
                console.log(save_section,car.current_section)
                const fs3 = require('fs');
                const data3 = JSON.stringify(results);
@@ -92,8 +112,7 @@ update= function(){
                     throw err;
                 }
                console.log("JSON data is saved.");
-         });
-            
+            });
            }
            
         });
@@ -102,7 +121,9 @@ update= function(){
 }
 
 
-update();
-     
 
-    
+   
+//update();
+let i = 1;
+setInterval(function() {
+  update();}, 20000);

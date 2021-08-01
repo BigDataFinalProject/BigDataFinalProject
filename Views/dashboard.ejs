@@ -3,8 +3,9 @@
 <head>
  
   <script>
-    myfunction= function(){
+    myfunction= function(element){
       alert("click")
+      element.hidden = true;
        save_json="<%= json%>";
        document.getElementById("demo").innerHTML = save_json;
 
@@ -78,11 +79,11 @@
   </div>
 
     <div class="center">
-      <input type="button"  value="Car Details" onClick=myfunction() style = "font-family:georgia,garamond,serif;font-size:25px;font-style:italic;">
+      <input type="button"  value="Car Details" onClick=myfunction(this) style = "font-family:georgia,garamond,serif;font-size:25px;font-style:italic;">
       
     </div>
 
-    <p id="demo" style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"></p>
+    <p id="demo" style = "font-family:georgia,garamond,serif;font-size:30px;font-style:italic;"></p>
      
 
 </body>

@@ -12,7 +12,6 @@ const { setLevels } = require('bigml/lib/logger');
   hours=["13:00","14:00","15:00","16:00","17:00"]
 
 
-var id=10;
 class Car {
     constructor(number_id,type,day,hour,special_day,direction,Entrance_to_road,current_section,my_prediction,Exit_from_road) {
       this.number_id = number_id;
@@ -30,8 +29,9 @@ class Car {
   }
 
 
-function make_private_car (percent) {
-  private=new Car(id++,types[0],0,0,0,0,0,0,-1,0);
+
+function make_private_car (percent,id) {
+  private=new Car(id,types[0],0,0,0,0,0,0,-1,0);
   if(percent>45){
     private.hour=hours[0];
     Math.floor(Math.random() * 2)+1 == 1? private.day=days[0] : private.day=days[4] ;
@@ -42,7 +42,7 @@ function make_private_car (percent) {
   }
  else{
   private.hour=hours[Math.floor(Math.random() * 5)]
-  private.day=days[Math. floor(Math. random() * (3)) + 1]  //not Sunday & Thursday
+  private.day=days[Math. floor(Math.random() * (3)) + 1]  //not Sunday & Thursday
   private.Entrance_to_road=5;
   private.current_section=5
   private.direction=direction[1]
@@ -51,14 +51,15 @@ function make_private_car (percent) {
 
 
  see(private)
- setTimeout(() => {console.log(private) }, 2000);
+ setTimeout(() => {}, 2000);
   t=JSON.parse(JSON.stringify(private))
-  setTimeout(() => { kafka.publish(t) }, 2000);
+  kafka.publish(t) 
+
   
 }
 
-function make_Bus (percent) {
-  Bus=new Car(id++,types[1],0,0,0,0,0,0,-1,0);
+function make_Bus (percent,id) {
+  Bus=new Car(id,types[1],0,0,0,0,0,0,-1,0);
   if(percent>40){
     Math.floor(Math.random() * 2)+1 == 1? Bus.hour=hours[0] : Bus.hour=hours[1] ;
     Math.floor(Math.random() * 2)+1 == 1? Bus.day=days[0] : Bus.day=days[1] ;
@@ -69,22 +70,22 @@ function make_Bus (percent) {
 }
 else{
   Bus.hour=hours[Math.floor(Math.random() * 3)+2]
-  Bus.day=days[Math. floor(Math. random() * (5)) + 2]  //not Sunday & Thursday
+  Bus.day=days[Math. floor(Math.random() * (5)) + 2]  //not Sunday & Thursday
   Bus.Entrance_to_road=1;
   Bus.current_section=1
   Bus.direction=direction[0]
   Math.floor(Math.random() * 2)+1 == 1? Bus.Exit_from_road=4 : Bus.Exit_from_road=5;    
 }
-//  t=JSON.parse(JSON.stringify(Bus))
-//  setTimeout(() => { kafka.publish(t) }, 2000);
+
  see(Bus)
- setTimeout(() => {  console.log(Bus)}, 2000);
+ setTimeout(() => { }, 2000);
  t=JSON.parse(JSON.stringify(Bus))
- setTimeout(() => { kafka.publish(t) }, 2000);
+ kafka.publish(t) 
+
 
 }
-function make_Truck (percent) {
-  truck=new Car(id++,types[2],0,0,0,0,0,0,0,0,-1,0);
+function make_Truck (percent,id) {
+  truck=new Car(id,types[2],0,0,0,0,0,0,0,0,-1,0);
   if(percent>30){
       truck.hour=hours[4]
       Math.floor(Math.random() * 2)+1 == 1? truck.day=days[0] : truck.day=days[6] ;
@@ -101,28 +102,24 @@ function make_Truck (percent) {
     truck.direction=direction[1]
     Math.floor(Math.random() * 2)+1 == 1? truck.Exit_from_road=1 : truck.Exit_from_road=2;    
   }
-  // t=JSON.parse(JSON.stringify(truck))
-  // setTimeout(() => { kafka.publish(t) }, 2000);
+
   see(truck)
-  setTimeout(() => {  console.log(truck)}, 2000);
+  setTimeout(() => { }, 2000);
   t=JSON.parse(JSON.stringify(truck))
-  setTimeout(() => { kafka.publish(t) }, 2000);
+  kafka.publish(t) 
+
  
 
 }
 
 
 function beginSim () {
-
-  for(let i=0;i<3;i++){
-
+  for(let i=0;i<6;i=i+3){
   percent=Math.floor(Math.random() * 100)+1;
-  type=Math.floor(Math.random() * 3);
-  switch (type) {
-    case 0:make_private_car (percent);break;
-    case 1:make_Bus (percent) ;break;
-    case 2:make_Truck (percent) ;break;
-  }
+  id=Math.floor(Math.random() * 10000)+i;
+  setTimeout(() => { make_private_car (percent,i)}, 8000);
+  setTimeout(() => { make_Bus (percent,i+1)}, 8000);
+  setTimeout(() => { make_Truck (percent,i+2)}, 8000);
 }
 }
 

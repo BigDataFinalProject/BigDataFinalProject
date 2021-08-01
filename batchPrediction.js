@@ -26,7 +26,6 @@ connection.organization="http://www.ilo.org/global/lang--en/index.htm";
                          };
                          const data = JSON.stringify( Prediction);
                          Car.my_prediction=parseInt(prediction.prediction);
-                         console.log("obj_car"+JSON.stringify(Car))
                       // write JSON string to a file
                       fs.writeFile('./data/Prediction.json', data, (err) => {
                           if (err) {

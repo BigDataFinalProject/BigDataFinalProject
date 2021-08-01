@@ -39,20 +39,28 @@ consumer.on("ready", function(arg) {
   consumer.consume();
 });
 
+var AsyncLock = require('async-lock');
+var lock = new AsyncLock();
+
+function operation(id,m) {  //lock code- for Sync
+  lock.acquire(id, function(done) {
+      console.log(id + " Running operation")
+      setTimeout(function() { 
+      const DbHelper = require ('./Mongo'); // import all file and name it DbHelper
+      check(m.value.toString());  //we send the message to mongo db
+
+      var redis = require('./RedisForArielSender')
+      sendredis(m.value.toString());
+          done();
+      }, 3000)
+  }, function(err, ret) {
+  }, {});
+}
+
+
 consumer.on("data", function(m) {
-//can we use here send to mongodb code as a variable ?-shahar
- console.log(m.value.toString());
- //11/7
- 
-  const DbHelper = require ('./Mongo'); // import all file and name it DbHelper
-  check(m.value.toString());  //we send the message to mongo db
+  operation('key1',m)
 
- var redis = require('./RedisForArielSender')
- sendredis(m.value.toString());
- //var redis2 = require('./RedisForArielReciver')
-
-
- 
  
 });
 

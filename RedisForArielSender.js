@@ -40,7 +40,6 @@ app.use(function (req, res, next) {
 sendredis= function(m){   //13/7- message from kafka (this function we activated from kafkaconsume code)
     // we still need to take only part of message to redis.
     //make it a car, and then take stuff out
-    console.log(m+"m");
     const myObj=JSON.parse(m)
     current_section = myObj["current_section"];
     Entrance_to_road = myObj["Entrance_to_road"];
@@ -54,20 +53,16 @@ sendredis= function(m){   //13/7- message from kafka (this function we activated
         "Exit_from_road": Exit_from_road,
         "direction": direction
        };
-
+    
     redisClient.set(number_id.toString(), JSON.stringify(Redis));
     redisClient.publish("message", JSON.stringify(Redis), function () {
     });
-    console.log("#######")
-
-
-   
-
+    
 }
-// sendredis("{\"number_id\":32,\"type\":\"truck\",\"day\":\"Sunday\",\"hour\":\"17:00\",\"special_day\":0,\"current_section\":1,\"direction\":\"1\",\"my_prediction\":0,\"Entrance_to_road\":1,\"Exit_from_road\":6}")
-// sendredis("{\"number_id\":31,\"type\":\"truck\",\"day\":\"Sunday\",\"hour\":\"17:00\",\"special_day\":0,\"current_section\":6,\"direction\":\"-1\",\"my_prediction\":0,\"Entrance_to_road\":6,\"Exit_from_road\":1}")
+//  setTimeout(() => { sendredis("{\"number_id\":36,\"type\":\"truck\",\"day\":\"Sunday\",\"hour\":\"17:00\",\"special_day\":0,\"current_section\":1,\"direction\":\"1\",\"my_prediction\":0,\"Entrance_to_road\":1,\"Exit_from_road\":6}")
+// }, 8000);
+//  sendredis("{\"number_id\":37,\"type\":\"Bus\",\"day\":\"Sunday\",\"hour\":\"17:00\",\"special_day\":0,\"current_section\":6,\"direction\":\"-1\",\"my_prediction\":0,\"Entrance_to_road\":6,\"Exit_from_road\":1}")
 
-//erase this row !!!!!!!!!!!!!!!!!-> 65
 
 redisClient.on('connect', function () {
     console.log('Sender connected to Redis');

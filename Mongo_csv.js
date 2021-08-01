@@ -13,9 +13,7 @@ module.exports.publish= function (){
   
                dbo.collection("test2").find({}).toArray(function(err, result) {
                if (err) throw err;
-               console.log(result);
-	
-	
+
 	           //-> Convert JSON to CSV data
 	           const csvFields = ['name', 'insert', 'out','color']; //not inserting by Fields -//12/7
 	           const json2csvParser = new Json2csvParser({ csvFields });
