@@ -10,7 +10,7 @@ var AsyncLock = require('async-lock');
 var lock = new AsyncLock();
 
 
-function operation(id,last_section,next_section,Exit_from_road) {
+function operation(id,last_section,next_section,Exit_from_road) {  //RT dashboard- button details
   lock.acquire(id, function(done) {
       setTimeout(function() {
           update_file_sections(last_section,next_section,Exit_from_road)
@@ -21,7 +21,7 @@ function operation(id,last_section,next_section,Exit_from_road) {
 }
 
 
-function operation2(id,prediction,out_section){
+function operation2(id,prediction,out_section){   //RT dashboard-table
 var array; 
   lock.acquire(id, function(done) {
       setTimeout(function() {
@@ -104,7 +104,7 @@ function update(){
   redisClient.keys('*', function (err, keys) {
     if (err) return console.log(err);
     if(keys){
-        async.map(keys, function(key, cb) {
+        async.map(keys, function(key, cb) {  //pull out key&value from Redis
             redisClient.get(key, function (error, value) {
                 if (error) return cb(error);
                 var job = {};
@@ -120,12 +120,12 @@ function update(){
                if(car.direction==-1) {car.current_section--;}
                else {car.current_section++;}
                redisClient.set(results[i].Id_car, JSON.stringify(car))
-               if(car.current_section==car.Exit_from_road){
-                redisClient.del(results[i].Id_car)
-                operation2('key1',car.my_prediction,car.Exit_from_road);
+               if(car.current_section==car.Exit_from_road){  //out of road
+                redisClient.del(results[i].Id_car)   //erase from Redis
+                operation2('key1',car.my_prediction,car.Exit_from_road); //RT dashboard-table
                }
            
-               operation('key1',save_section,car.current_section,car.Exit_from_road)
+               operation('key1',save_section,car.current_section,car.Exit_from_road) //RT button details
                const fs3 = require('fs');
                const data3 = JSON.stringify(results);
                fs3.writeFile('./data/car_details.json', data3, (err) => {

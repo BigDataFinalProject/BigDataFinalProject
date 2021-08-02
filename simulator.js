@@ -102,7 +102,7 @@ function make_Truck (percent,id) {
 
 
 function beginSim () {
-  for(let i=0;i<3;i=i+3){
+  for(let i=0;i<20;i=i+3){
   percent=Math.floor(Math.random() * 100)+1;
   id=Math.floor(Math.random() * 10000)+i;
   setTimeout(() => { make_private_car (percent,i)}, 8000);
