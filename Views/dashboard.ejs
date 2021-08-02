@@ -6,8 +6,13 @@
     myfunction= function(element){
       alert("click")
       element.hidden = true;
-       save_json="<%= json%>";
-       document.getElementById("demo").innerHTML = save_json;
+      save_json="<%= json%>";
+      // elem=JSON.stringify(save_json);
+      // console.log(elem)
+      // for(let i=0;i<elem.length;i++){
+      //     console.log(elem[i])
+      // }
+      document.getElementById("demo").innerHTML = save_json;
 
     }
 

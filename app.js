@@ -37,6 +37,9 @@ fs2.readFile('./data/Cars_Sections.json', 'utf-8', (err, data) => {
              if (err) {
                 throw err;
         }
+        data2=data2.replace(/[^A-Za-z0-9]/g, " ");
+        data2=data2.replace(/data/g, "");
+        data2=data2.replace(/(\d+)/g, '\:$1\,');
         res.render('dashboard',{one:var1,two:var2,three:var3,four:var4,five:var5,six:var6,json:data2.toString()} );
 
         });
