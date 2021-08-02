@@ -47,9 +47,31 @@ fs2.readFile('./data/Cars_Sections.json', 'utf-8', (err, data) => {
     
 });
 
+app.get('/p', function routeHandler(req ,res) {
+    const fs2 = require('fs');
+    fs2.readFile('./data/dashboard_table.json', 'utf-8', (err, data) => {
+            if (err) {
+                throw err;
+            }
+            save2=JSON.parse(data.toString());
+            sum=0;
+            sum_positive=0;
+            for(let i=0;i<save2.array.length;i++){
+                if(save2.array[i]!=0){
+                    sum=sum+save2.array[i];
+                }
+                if(i%7==0){
+                    if(save2.array[i]!=0)
+                       sum_positive=sum_positive+save2.array[i];
+                }
+            }
+            acur=  parseInt(sum_positive/sum*100);
+            res.render('prediction',{array:save2.array,acur:acur} );
+    
+            });
+    
+    });
 
-// prediction table
-app.get('/p', (req, res) => res.render('prediction'));
 
 
 //------------ Mongo_csv------------

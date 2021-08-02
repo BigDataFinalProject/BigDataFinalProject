@@ -10,12 +10,12 @@ var AsyncLock = require('async-lock');
 var lock = new AsyncLock();
 
 
-function operation(id,last_section,next_section) {
+function operation(id,last_section,next_section,Exit_from_road) {
   console.log(id + " calling operation");
   lock.acquire(id, function(done) {
       console.log(id + " Running operation")
       setTimeout(function() {
-          update_file_sections(last_section,next_section)
+          update_file_sections(last_section,next_section,Exit_from_road)
           console.log(id + " Finishing operation")
           done();
       }, 3000)
@@ -25,7 +25,37 @@ function operation(id,last_section,next_section) {
 }
 
 
-update_file_sections=function(last_section,next_section){
+function operation2(id,prediction,out_section){
+var array; 
+  lock.acquire(id, function(done) {
+      setTimeout(function() {
+        const fs2 = require('fs');
+        fs2.readFile('./data/dashboard_table.json', 'utf-8', (err, data) => {
+            if (err) {
+                throw err;
+            }
+            save2=JSON.parse(data.toString()); 
+            console.log(save2.array)  
+            save2.array[(out_section-1)*6+prediction-1]=save2.array[(out_section-1)*6+prediction-1] +1;         
+            const fs3 = require('fs');
+            fs3.writeFile('./data/dashboard_table.json',  JSON.stringify(save2), (err) => {
+                if (err) {
+                    throw err;
+                }
+                console.log("JSON data is saved.");
+            });
+    
+          });
+       
+          done();
+      }, 3000)
+  }, function(err, ret) {
+  }, {});
+  
+}
+
+
+update_file_sections=function(last_section,next_section,Exit_from_road){
     console.log("in")
     const fs2 = require('fs');
     var save2;
@@ -37,6 +67,8 @@ update_file_sections=function(last_section,next_section){
         var1=parseInt(save2.one);var2=parseInt(save2.two);var3=parseInt(save2.three);var4=parseInt(save2.four);var5=parseInt(save2.five);var6=parseInt(save2.six);
         console.log(var1+","+var2+","+var3+","+var4+","+var5+","+var6)
 
+        if(next_section!=Exit_from_road){
+
         switch (parseInt(next_section)) {
             case 1:var1++;break;
             case 2:var2++;break;
@@ -47,6 +79,7 @@ update_file_sections=function(last_section,next_section){
             default: break;
               
           }
+        }
           switch (parseInt(last_section)) {
             case 1:var1--;break;
             case 2:var2--;break;
@@ -66,7 +99,6 @@ update_file_sections=function(last_section,next_section){
                 throw err;
             }
             console.log("JSON data is saved.");
-            // try to activate ejs without pressing !!!!!!!!!!
         });
 
       });
@@ -94,15 +126,17 @@ function update(){
                console.log(results[i].Id_car)
                car=JSON.parse(results[i].data)
                save_section=car.current_section;
-               if(car.direction==-1) car.current_section--;
-               else car.current_section++;
+               if(car.direction==-1) {car.current_section--;}
+               else {car.current_section++;}
                redisClient.set(results[i].Id_car, JSON.stringify(car))
                console.log(car)
-               if(car.current_section>6 || car.current_section<1){
+               if(car.current_section==car.Exit_from_road){
                 redisClient.del(results[i].Id_car)
+                operation2('key1',car.my_prediction,car.Exit_from_road);
                }
-               operation('key1',save_section,car.current_section)
-               //update_file_sections(save_section,car.current_section)           
+           
+               operation('key1',save_section,car.current_section,car.Exit_from_road)
+               
                console.log(save_section,car.current_section)
                const fs3 = require('fs');
                const data3 = JSON.stringify(results);
@@ -122,8 +156,9 @@ function update(){
 
 
 
-   
-//update();
+
 let i = 1;
 setInterval(function() {
-  update();}, 20000);
+  update();}, 30000);
+
+ 

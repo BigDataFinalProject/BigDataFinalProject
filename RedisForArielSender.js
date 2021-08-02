@@ -46,12 +46,14 @@ sendredis= function(m){   //13/7- message from kafka (this function we activated
     Exit_from_road = myObj["Exit_from_road"];
     number_id = myObj["number_id"];
     direction = myObj["direction"];
+    my_prediction = myObj["my_prediction"];
 
     const Redis = {
         "current_section": current_section,
         "Entrance_to_road": Entrance_to_road,
         "Exit_from_road": Exit_from_road,
-        "direction": direction
+        "direction": direction,
+        "my_prediction": my_prediction
        };
     
     redisClient.set(number_id.toString(), JSON.stringify(Redis));

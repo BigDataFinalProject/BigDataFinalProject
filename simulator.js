@@ -31,7 +31,7 @@ class Car {
 
 
 function make_private_car (percent,id) {
-  private=new Car(id,types[0],0,0,0,0,0,0,-1,0);
+  private=new Car(id,types[0],0,0,0,0,0,0,-2,0);
   if(percent>45){
     private.hour=hours[0];
     Math.floor(Math.random() * 2)+1 == 1? private.day=days[0] : private.day=days[4] ;
@@ -48,18 +48,12 @@ function make_private_car (percent,id) {
   private.direction=direction[1]
   Math.floor(Math.random() * 2)+1 == 1? private.Exit_from_road=3 : private.Exit_from_road=2;    
  }
+ see('key1',private);  //prediction+kafka
 
-
- see(private)
- setTimeout(() => {}, 2000);
-  t=JSON.parse(JSON.stringify(private))
-  kafka.publish(t) 
-
-  
 }
 
 function make_Bus (percent,id) {
-  Bus=new Car(id,types[1],0,0,0,0,0,0,-1,0);
+  Bus=new Car(id,types[1],0,0,0,0,0,0,-2,0);
   if(percent>40){
     Math.floor(Math.random() * 2)+1 == 1? Bus.hour=hours[0] : Bus.hour=hours[1] ;
     Math.floor(Math.random() * 2)+1 == 1? Bus.day=days[0] : Bus.day=days[1] ;
@@ -77,15 +71,13 @@ else{
   Math.floor(Math.random() * 2)+1 == 1? Bus.Exit_from_road=4 : Bus.Exit_from_road=5;    
 }
 
- see(Bus)
- setTimeout(() => { }, 2000);
- t=JSON.parse(JSON.stringify(Bus))
- kafka.publish(t) 
+ 
+ see('key1',Bus);
 
 
 }
 function make_Truck (percent,id) {
-  truck=new Car(id,types[2],0,0,0,0,0,0,0,0,-1,0);
+  truck=new Car(id,types[2],0,0,0,0,0,0,0,0,-2,0);
   if(percent>30){
       truck.hour=hours[4]
       Math.floor(Math.random() * 2)+1 == 1? truck.day=days[0] : truck.day=days[6] ;
@@ -103,24 +95,24 @@ function make_Truck (percent,id) {
     Math.floor(Math.random() * 2)+1 == 1? truck.Exit_from_road=1 : truck.Exit_from_road=2;    
   }
 
-  see(truck)
-  setTimeout(() => { }, 2000);
-  t=JSON.parse(JSON.stringify(truck))
-  kafka.publish(t) 
-
- 
+  
+  see('key1',truck)
 
 }
 
 
 function beginSim () {
-  for(let i=0;i<6;i=i+3){
+  for(let i=0;i<3;i=i+3){
   percent=Math.floor(Math.random() * 100)+1;
   id=Math.floor(Math.random() * 10000)+i;
   setTimeout(() => { make_private_car (percent,i)}, 8000);
   setTimeout(() => { make_Bus (percent,i+1)}, 8000);
   setTimeout(() => { make_Truck (percent,i+2)}, 8000);
-}
+ }
+ const update_info = require('./Info_Redis_Update');
+
+
 }
 
+const receive = require('./RedisForArielReciver');
 beginSim()
