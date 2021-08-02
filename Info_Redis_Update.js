@@ -11,16 +11,12 @@ var lock = new AsyncLock();
 
 
 function operation(id,last_section,next_section,Exit_from_road) {
-  console.log(id + " calling operation");
   lock.acquire(id, function(done) {
-      console.log(id + " Running operation")
       setTimeout(function() {
           update_file_sections(last_section,next_section,Exit_from_road)
-          console.log(id + " Finishing operation")
           done();
       }, 3000)
   }, function(err, ret) {
-      console.log(id + " Freeing lock", ret)
   }, {});
 }
 
@@ -35,7 +31,6 @@ var array;
                 throw err;
             }
             save2=JSON.parse(data.toString()); 
-            console.log(save2.array)  
             save2.array[(out_section-1)*6+prediction-1]=save2.array[(out_section-1)*6+prediction-1] +1;         
             const fs3 = require('fs');
             fs3.writeFile('./data/dashboard_table.json',  JSON.stringify(save2), (err) => {
@@ -56,7 +51,6 @@ var array;
 
 
 update_file_sections=function(last_section,next_section,Exit_from_road){
-    console.log("in")
     const fs2 = require('fs');
     var save2;
     fs2.readFile('./data/Cars_Sections.json', 'utf-8', (err, data) => {
@@ -108,7 +102,6 @@ update_file_sections=function(last_section,next_section,Exit_from_road){
 function update(){
   var async = require("async");
   redisClient.keys('*', function (err, keys) {
-    console.log("update")
     if (err) return console.log(err);
     if(keys){
         async.map(keys, function(key, cb) {
@@ -121,26 +114,20 @@ function update(){
             }); 
         }, function (error, results) {
            if (error) return console.log(error);
-           console.log(results);
                for(let i=0; i<results.length;i++){
-               console.log(results[i].Id_car)
                car=JSON.parse(results[i].data)
                save_section=car.current_section;
                if(car.direction==-1) {car.current_section--;}
                else {car.current_section++;}
                redisClient.set(results[i].Id_car, JSON.stringify(car))
-               console.log(car)
                if(car.current_section==car.Exit_from_road){
                 redisClient.del(results[i].Id_car)
                 operation2('key1',car.my_prediction,car.Exit_from_road);
                }
            
                operation('key1',save_section,car.current_section,car.Exit_from_road)
-               
-               console.log(save_section,car.current_section)
                const fs3 = require('fs');
                const data3 = JSON.stringify(results);
-               console.log("data3"+data3)
                fs3.writeFile('./data/car_details.json', data3, (err) => {
                   if (err) {
                     throw err;
