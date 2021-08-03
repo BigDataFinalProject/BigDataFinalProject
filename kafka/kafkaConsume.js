@@ -46,10 +46,10 @@ function operation(id,m) {  //lock code- for Sync
   lock.acquire(id, function(done) {
       console.log(id + " Running operation")
       setTimeout(function() { 
-      const DbHelper = require ('./Mongo'); // import all file and name it DbHelper
+      const DbHelper = require ('../mongo/Mongo'); // import all file and name it DbHelper
       check(m.value.toString());  //we send the message to mongo db
 
-      var redis = require('./RedisForArielSender')
+      var redis = require('../redis/RedisForArielSender')
       sendredis(m.value.toString());
           done();
       }, 3000)

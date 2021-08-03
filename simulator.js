@@ -1,5 +1,5 @@
 //const { setLevels } = require("bigml/lib/logger")
-const kafka = require('./kafkaProduce');
+const kafka = require('./kafka/kafkaProduce');
 const kafka2 = require('./batchPrediction');
 const { setLevels } = require('bigml/lib/logger');
 
@@ -102,17 +102,17 @@ function make_Truck (percent,id) {
 
 
 function beginSim () {
-  for(let i=0;i<20;i=i+3){
+  for(let i=0;i<50;i=i+3){
   percent=Math.floor(Math.random() * 100)+1;
   id=Math.floor(Math.random() * 10000)+i;
   setTimeout(() => { make_private_car (percent,i)}, 8000);
   setTimeout(() => { make_Bus (percent,i+1)}, 8000);
   setTimeout(() => { make_Truck (percent,i+2)}, 8000);
  }
- const update_info = require('./Info_Redis_Update');
+ const update_info = require('./redis/Info_Redis_Update');
 
 
 }
 
-const receive = require('./RedisForArielReciver');
+const receive = require('./redis/RedisForArielReciver');
 beginSim()

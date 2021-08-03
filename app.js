@@ -6,7 +6,7 @@ const port = 3000
 
 
 //------------ kafka------------
-const kafka = require('./kafkaProduce');
+const kafka = require('./kafka/kafkaProduce');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -78,7 +78,7 @@ app.get('/p', function routeHandler(req ,res) {
 
 
 //------------ Mongo_csv------------
-const mongocsv = require('./Mongo_csv');
+const mongocsv = require('./mongo/Mongo_csv');
 const bigml = require('./BigMl');
 const { data } = require('bigml/lib/logger');
 

@@ -3,7 +3,7 @@ const { SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG } = require('constants');
 
 const fs = require('fs');
 var AsyncLock = require('async-lock');
-const kafka = require('./kafkaProduce');
+const kafka = require('./kafka/kafkaProduce');
 
 var lock = new AsyncLock();
 see= function(id,Car) {
